@@ -28,7 +28,7 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 
 def calculate_transaction(scenario: Scenario) -> dict[str, object]:
     contract_months = int(clamp(scenario.contract_months, 0, MAX_CONTRACT_MONTHS))
-    seller_credit = int(clamp(scenario.seller_credit, 1_800_000, 2_500_000))
+    seller_credit = int(clamp(scenario.seller_credit, 1_800_000, 3_000_000))
 
     contract_component = round(MAX_CONTRACT_VALUE * (contract_months / MAX_CONTRACT_MONTHS))
     contract_adjustment = contract_component - MAX_CONTRACT_VALUE
