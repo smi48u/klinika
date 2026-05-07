@@ -79,6 +79,143 @@
         <p class="result-subtitle" id="rangeStatus">Wartość mieści się w zakresie referencyjnym.</p>
       </div>
 
+      <div class="visual-stack">
+        <div class="visual-card">
+          <div class="visual-heading">
+            <h3>Oś wyniku transakcji</h3>
+            <p>
+              Marker pokazuje aktualną wartość transakcji, a jasny przedział wskazuje
+              zakres referencyjny 7.40-7.80 mln zł.
+            </p>
+          </div>
+
+          <div class="spectrum-block">
+            <div class="spectrum-labels">
+              <span id="visualMin">3.70 mln zł</span>
+              <span>Zakres roboczy</span>
+              <span id="visualMax">8.40 mln zł</span>
+            </div>
+            <div class="spectrum-track">
+              <div class="spectrum-reference" id="spectrumReference"></div>
+              <div class="spectrum-marker" id="spectrumMarker"></div>
+            </div>
+            <div class="spectrum-readout">
+              <span id="spectrumZone">Strefa referencyjna</span>
+              <strong id="spectrumTotal">7.40 mln zł</strong>
+            </div>
+          </div>
+
+          <div class="legend-row">
+            <div class="legend-chip">
+              <span class="legend-dot contract-dot"></span>
+              <small>Kontrakt</small>
+            </div>
+            <div class="legend-chip">
+              <span class="legend-dot credit-dot"></span>
+              <small>Kredyt</small>
+            </div>
+            <div class="legend-chip">
+              <span class="legend-dot insurance-dot"></span>
+              <small>Ubezpieczenie</small>
+            </div>
+            <div class="legend-chip">
+              <span class="legend-dot noncompete-dot"></span>
+              <small>Zakaz konkurencji</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-card">
+          <div class="visual-heading">
+            <h3>Wykres wpływu warunków</h3>
+            <p>
+              To jest ścieżka dojścia do wyniku. Każdy kolejny kolorowy pasek pokazuje,
+              jak dany warunek przesuwa wartość transakcji.
+            </p>
+          </div>
+
+          <div class="waterfall-scale">
+            <span id="waterfallMin">3.70 mln zł</span>
+            <span>Zakres roboczy wykresu</span>
+            <span id="waterfallMax">8.40 mln zł</span>
+          </div>
+
+          <div class="waterfall-chart">
+            <div class="waterfall-row">
+              <div class="waterfall-meta">
+                <span class="waterfall-name">1. Wartość bazowa</span>
+                <strong class="waterfall-number" id="wfBaseValue">7.40 mln zł</strong>
+                <small class="waterfall-note">Punkt startowy kalkulatora.</small>
+              </div>
+              <div class="waterfall-track">
+                <div class="waterfall-bar waterfall-base-bar" id="wfBaseBar"></div>
+                <div class="waterfall-node" id="wfBaseNode"></div>
+              </div>
+            </div>
+
+            <div class="waterfall-row">
+              <div class="waterfall-meta">
+                <span class="waterfall-name">2. Kontrakt</span>
+                <strong class="waterfall-number" id="wfContractValue">0.00 mln zł</strong>
+                <small class="waterfall-note" id="wfContractNote">Wpływ długości kontraktu.</small>
+              </div>
+              <div class="waterfall-track">
+                <div class="waterfall-bar waterfall-contract-bar" id="wfContractBar"></div>
+                <div class="waterfall-node" id="wfContractNode"></div>
+              </div>
+            </div>
+
+            <div class="waterfall-row">
+              <div class="waterfall-meta">
+                <span class="waterfall-name">3. Kredyt sprzedającego</span>
+                <strong class="waterfall-number" id="wfCreditValue">0.00 mln zł</strong>
+                <small class="waterfall-note" id="wfCreditNote">Wpływ wielkości kredytu.</small>
+              </div>
+              <div class="waterfall-track">
+                <div class="waterfall-bar waterfall-credit-bar" id="wfCreditBar"></div>
+                <div class="waterfall-node" id="wfCreditNode"></div>
+              </div>
+            </div>
+
+            <div class="waterfall-row">
+              <div class="waterfall-meta">
+                <span class="waterfall-name">4. Ubezpieczenie</span>
+                <strong class="waterfall-number" id="wfInsuranceValue">0.00 mln zł</strong>
+                <small class="waterfall-note" id="wfInsuranceNote">Wpływ ubezpieczenia.</small>
+              </div>
+              <div class="waterfall-track">
+                <div class="waterfall-bar waterfall-insurance-bar" id="wfInsuranceBar"></div>
+                <div class="waterfall-node" id="wfInsuranceNode"></div>
+              </div>
+            </div>
+
+            <div class="waterfall-row">
+              <div class="waterfall-meta">
+                <span class="waterfall-name">5. Zakaz konkurencji</span>
+                <strong class="waterfall-number" id="wfNonCompeteValue">0.00 mln zł</strong>
+                <small class="waterfall-note" id="wfNonCompeteNote">Wpływ zabezpieczenia pacjentów.</small>
+              </div>
+              <div class="waterfall-track">
+                <div class="waterfall-bar waterfall-noncompete-bar" id="wfNonCompeteBar"></div>
+                <div class="waterfall-node" id="wfNonCompeteNode"></div>
+              </div>
+            </div>
+
+            <div class="waterfall-row waterfall-row-final">
+              <div class="waterfall-meta">
+                <span class="waterfall-name">6. Wynik końcowy</span>
+                <strong class="waterfall-number" id="wfFinalValue">7.40 mln zł</strong>
+                <small class="waterfall-note" id="wfFinalNote">Suma wszystkich wpływów.</small>
+              </div>
+              <div class="waterfall-track">
+                <div class="waterfall-bar waterfall-final-bar" id="wfFinalBar"></div>
+                <div class="waterfall-node" id="wfFinalNode"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="breakdown">
         <h3>Rozbicie zmian względem wartości bazowej</h3>
         <div class="breakdown-row">

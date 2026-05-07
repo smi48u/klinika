@@ -9,9 +9,21 @@ app = Flask(__name__)
 BASE_VALUE = 7_400_000
 MAX_CONTRACT_VALUE = 2_000_000
 MAX_CONTRACT_MONTHS = 36
+MIN_SELLER_CREDIT = 1_800_000
+MAX_SELLER_CREDIT = 3_000_000
 NEUTRAL_SELLER_CREDIT = 2_000_000
 INSURANCE_PENALTY = 1_000_000
 NON_COMPETE_PENALTY = 500_000
+REFERENCE_MIN = 7_400_000
+REFERENCE_MAX = 7_800_000
+VISUAL_MIN = (
+    BASE_VALUE
+    - MAX_CONTRACT_VALUE
+    + (MIN_SELLER_CREDIT - NEUTRAL_SELLER_CREDIT)
+    - INSURANCE_PENALTY
+    - NON_COMPETE_PENALTY
+)
+VISUAL_MAX = BASE_VALUE + (MAX_SELLER_CREDIT - NEUTRAL_SELLER_CREDIT)
 
 
 @dataclass
@@ -28,7 +40,7 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 
 def calculate_transaction(scenario: Scenario) -> dict[str, object]:
     contract_months = int(clamp(scenario.contract_months, 0, MAX_CONTRACT_MONTHS))
-    seller_credit = int(clamp(scenario.seller_credit, 1_800_000, 3_000_000))
+    seller_credit = int(clamp(scenario.seller_credit, MIN_SELLER_CREDIT, MAX_SELLER_CREDIT))
 
     contract_component = round(MAX_CONTRACT_VALUE * (contract_months / MAX_CONTRACT_MONTHS))
     contract_adjustment = contract_component - MAX_CONTRACT_VALUE
@@ -50,8 +62,12 @@ def calculate_transaction(scenario: Scenario) -> dict[str, object]:
         "total": total,
         "contract_component": contract_component,
         "reference_range": {
-            "min": 7_400_000,
-            "max": 7_800_000,
+            "min": REFERENCE_MIN,
+            "max": REFERENCE_MAX,
+        },
+        "visual_range": {
+            "min": VISUAL_MIN,
+            "max": VISUAL_MAX,
         },
         "adjustments": adjustments,
     }

@@ -192,6 +192,254 @@ input[type="range"] {
   gap: 12px;
 }
 
+.visual-stack {
+  margin-top: 22px;
+  display: grid;
+  gap: 18px;
+}
+
+.visual-card {
+  padding: 20px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 241, 233, 0.92)),
+    rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(80, 53, 28, 0.1);
+}
+
+.visual-heading h3 {
+  font-size: 1rem;
+}
+
+.visual-heading p {
+  margin-top: 6px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.spectrum-block {
+  margin-top: 18px;
+}
+
+.spectrum-labels,
+.spectrum-readout {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.spectrum-labels {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.spectrum-track {
+  position: relative;
+  height: 28px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff5252 0%, #ffb347 24%, #f5e663 42%, #54d48c 60%, #54b7ff 80%, #7a73ff 100%);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.spectrum-reference {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.spectrum-marker {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fffdf9;
+  border: 3px solid rgba(32, 21, 13, 0.85);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 14px rgba(32, 21, 13, 0.28);
+}
+
+.spectrum-readout {
+  margin-top: 12px;
+}
+
+.spectrum-readout span {
+  color: var(--muted);
+}
+
+.legend-row {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(80, 53, 28, 0.08);
+}
+
+.legend-chip small {
+  color: var(--muted);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.contract-dot {
+  background: linear-gradient(135deg, #ff8a65, #ff5252);
+}
+
+.credit-dot {
+  background: linear-gradient(135deg, #9edb7a, #1b7a52);
+}
+
+.insurance-dot {
+  background: linear-gradient(135deg, #84d7ff, #2f69d8);
+}
+
+.noncompete-dot {
+  background: linear-gradient(135deg, #ffd166, #f08c2f);
+}
+
+.waterfall-scale {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.waterfall-chart {
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+.waterfall-row {
+  display: grid;
+  grid-template-columns: minmax(185px, 1.2fr) minmax(220px, 2fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.waterfall-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.waterfall-name {
+  font-weight: 700;
+}
+
+.waterfall-number {
+  font-size: 1rem;
+}
+
+.waterfall-note {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.waterfall-track {
+  position: relative;
+  min-height: 34px;
+  border-radius: 20px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(80, 53, 28, 0.04) 0,
+      rgba(80, 53, 28, 0.04) 1px,
+      transparent 1px,
+      transparent 12.5%
+    ),
+    rgba(32, 21, 13, 0.06);
+  border: 1px solid rgba(80, 53, 28, 0.06);
+  overflow: hidden;
+}
+
+.waterfall-bar {
+  position: absolute;
+  top: 6px;
+  height: 22px;
+  border-radius: 999px;
+  transition:
+    left 180ms ease,
+    width 180ms ease;
+  min-width: 0;
+}
+
+.waterfall-node {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fffdf9;
+  border: 3px solid rgba(32, 21, 13, 0.85);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 3px 10px rgba(32, 21, 13, 0.18);
+}
+
+.waterfall-base-bar {
+  background: linear-gradient(90deg, rgba(184, 92, 56, 0.22), rgba(184, 92, 56, 0.45));
+}
+
+.waterfall-contract-bar {
+  background: linear-gradient(90deg, #ff9f7d, #ff5d5d);
+}
+
+.waterfall-credit-bar {
+  background: linear-gradient(90deg, #b6eb8f, #1b7a52);
+}
+
+.waterfall-insurance-bar {
+  background: linear-gradient(90deg, #9de2ff, #2f69d8);
+}
+
+.waterfall-noncompete-bar {
+  background: linear-gradient(90deg, #ffe08a, #f08c2f);
+}
+
+.waterfall-final-bar {
+  background: linear-gradient(90deg, rgba(32, 21, 13, 0.25), rgba(32, 21, 13, 0.55));
+}
+
+.waterfall-bar.step-positive {
+  box-shadow: 0 0 18px rgba(27, 122, 82, 0.14);
+}
+
+.waterfall-bar.step-negative {
+  box-shadow: 0 0 18px rgba(161, 55, 55, 0.14);
+}
+
+.waterfall-bar.step-neutral {
+  opacity: 0.35;
+}
+
+.waterfall-row-final .waterfall-track {
+  background:
+    linear-gradient(90deg, rgba(184, 92, 56, 0.05), rgba(32, 21, 13, 0.08)),
+    rgba(32, 21, 13, 0.05);
+}
+
 .breakdown h3 {
   margin-bottom: 4px;
   font-size: 1rem;
@@ -229,5 +477,20 @@ input[type="range"] {
   .breakdown-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .waterfall-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .waterfall-scale {
+    display: grid;
+    gap: 4px;
+  }
+
+  .legend-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
