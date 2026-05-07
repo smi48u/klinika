@@ -1,18 +1,15 @@
 const elements = {
   contractMonths: document.querySelector("#contractMonths"),
-  propertyPayment: document.querySelector("#propertyPayment"),
   sellerCredit: document.querySelector("#sellerCredit"),
   hasInsurance: document.querySelector("#hasInsurance"),
   hasNonCompete: document.querySelector("#hasNonCompete"),
   contractMonthsValue: document.querySelector("#contractMonthsValue"),
-  propertyPaymentValue: document.querySelector("#propertyPaymentValue"),
   sellerCreditValue: document.querySelector("#sellerCreditValue"),
   contractHint: document.querySelector("#contractHint"),
   totalValue: document.querySelector("#totalValue"),
   rangeStatus: document.querySelector("#rangeStatus"),
   baseValue: document.querySelector("#baseValue"),
   contractAdjustment: document.querySelector("#contractAdjustment"),
-  propertyAdjustment: document.querySelector("#propertyAdjustment"),
   creditAdjustment: document.querySelector("#creditAdjustment"),
   insuranceAdjustment: document.querySelector("#insuranceAdjustment"),
   nonCompeteAdjustment: document.querySelector("#nonCompeteAdjustment"),
@@ -40,14 +37,12 @@ function applyAdjustmentClass(node, value) {
 async function updateCalculation() {
   const payload = {
     contract_months: Number(elements.contractMonths.value),
-    property_payment: Number(elements.propertyPayment.value),
     seller_credit: Number(elements.sellerCredit.value),
     has_insurance: elements.hasInsurance.checked,
     has_non_compete: elements.hasNonCompete.checked,
   };
 
   elements.contractMonthsValue.textContent = `${payload.contract_months} mies.`;
-  elements.propertyPaymentValue.textContent = formatMoney(payload.property_payment);
   elements.sellerCreditValue.textContent = formatMoney(payload.seller_credit);
 
   try {
@@ -70,7 +65,6 @@ async function updateCalculation() {
 
     const rows = [
       [elements.contractAdjustment, data.adjustments.contract],
-      [elements.propertyAdjustment, data.adjustments.property],
       [elements.creditAdjustment, data.adjustments.credit],
       [elements.insuranceAdjustment, data.adjustments.insurance],
       [elements.nonCompeteAdjustment, data.adjustments.non_compete],
@@ -95,7 +89,6 @@ async function updateCalculation() {
 
 for (const node of [
   elements.contractMonths,
-  elements.propertyPayment,
   elements.sellerCredit,
   elements.hasInsurance,
   elements.hasNonCompete,

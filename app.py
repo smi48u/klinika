@@ -6,10 +6,9 @@ from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 
-BASE_VALUE = 7_500_000
+BASE_VALUE = 7_400_000
 MAX_CONTRACT_VALUE = 2_000_000
 MAX_CONTRACT_MONTHS = 36
-NEUTRAL_PROPERTY_PAYMENT = 5_500_000
 NEUTRAL_SELLER_CREDIT = 2_000_000
 INSURANCE_PENALTY = 1_000_000
 NON_COMPETE_PENALTY = 500_000
@@ -18,7 +17,6 @@ NON_COMPETE_PENALTY = 500_000
 @dataclass
 class Scenario:
     contract_months: int
-    property_payment: int
     seller_credit: int
     has_insurance: bool
     has_non_compete: bool
@@ -30,19 +28,16 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 
 def calculate_transaction(scenario: Scenario) -> dict[str, object]:
     contract_months = int(clamp(scenario.contract_months, 0, MAX_CONTRACT_MONTHS))
-    property_payment = int(clamp(scenario.property_payment, 5_400_000, 5_800_000))
     seller_credit = int(clamp(scenario.seller_credit, 1_800_000, 2_500_000))
 
     contract_component = round(MAX_CONTRACT_VALUE * (contract_months / MAX_CONTRACT_MONTHS))
     contract_adjustment = contract_component - MAX_CONTRACT_VALUE
-    property_adjustment = NEUTRAL_PROPERTY_PAYMENT - property_payment
     credit_adjustment = NEUTRAL_SELLER_CREDIT - seller_credit
     insurance_adjustment = 0 if scenario.has_insurance else -INSURANCE_PENALTY
     non_compete_adjustment = 0 if scenario.has_non_compete else -NON_COMPETE_PENALTY
 
     adjustments = {
         "contract": contract_adjustment,
-        "property": property_adjustment,
         "credit": credit_adjustment,
         "insurance": insurance_adjustment,
         "non_compete": non_compete_adjustment,
@@ -73,7 +68,6 @@ def calculate() -> tuple[object, int]:
 
     scenario = Scenario(
         contract_months=int(payload.get("contract_months", 36)),
-        property_payment=int(payload.get("property_payment", 5_500_000)),
         seller_credit=int(payload.get("seller_credit", 2_000_000)),
         has_insurance=bool(payload.get("has_insurance", True)),
         has_non_compete=bool(payload.get("has_non_compete", True)),

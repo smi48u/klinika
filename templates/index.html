@@ -17,7 +17,7 @@
       <p class="eyebrow">Kocon & Co</p>
       <h1>Kalkulator wartości transakcji</h1>
       <p class="intro">
-        Model startuje od wartości bazowej <strong>7.50 mln zł</strong> przy
+        Model startuje od wartości bazowej <strong>7.40 mln zł</strong> przy
         ustawieniach neutralnych. Zmieniaj parametry i obserwuj wpływ na wynik.
       </p>
     </section>
@@ -36,19 +36,6 @@
         <input id="contractMonths" name="contractMonths" type="range" min="0" max="36" step="1" value="36" />
         <p class="hint" id="contractHint">
           Pełne 36 miesięcy odpowiada maksymalnej wartości 2.00 mln zł.
-        </p>
-      </div>
-
-      <div class="field">
-        <div class="field-header">
-          <label for="propertyPayment">Płatność za nieruchomość i sprzęt</label>
-          <span id="propertyPaymentValue">5.50 mln zł</span>
-        </div>
-        <input id="propertyPayment" name="propertyPayment" type="range" min="5400000" max="5800000" step="10000"
-          value="5500000" />
-        <p class="hint">
-          Punkt neutralny: <strong>5.50 mln zł</strong>. Niższa płatność podnosi wycenę,
-          wyższa ją obniża.
         </p>
       </div>
 
@@ -88,7 +75,7 @@
 
       <div class="result-card">
         <p class="result-label">Wartość transakcji</p>
-        <p class="result-value" id="totalValue">7.50 mln zł</p>
+        <p class="result-value" id="totalValue">7.40 mln zł</p>
         <p class="result-subtitle" id="rangeStatus">Wartość mieści się w zakresie referencyjnym.</p>
       </div>
 
@@ -96,15 +83,11 @@
         <h3>Rozbicie zmian względem wartości bazowej</h3>
         <div class="breakdown-row">
           <span>Wartość bazowa</span>
-          <strong id="baseValue">7.50 mln zł</strong>
+          <strong id="baseValue">7.40 mln zł</strong>
         </div>
         <div class="breakdown-row">
           <span>Kontrakt</span>
           <strong id="contractAdjustment">0.00 mln zł</strong>
-        </div>
-        <div class="breakdown-row">
-          <span>Nieruchomość i sprzęt</span>
-          <strong id="propertyAdjustment">0.00 mln zł</strong>
         </div>
         <div class="breakdown-row">
           <span>Kredyt sprzedającego</span>
