@@ -32,7 +32,7 @@ def calculate_transaction(scenario: Scenario) -> dict[str, object]:
 
     contract_component = round(MAX_CONTRACT_VALUE * (contract_months / MAX_CONTRACT_MONTHS))
     contract_adjustment = contract_component - MAX_CONTRACT_VALUE
-    credit_adjustment = NEUTRAL_SELLER_CREDIT - seller_credit
+    credit_adjustment = seller_credit - NEUTRAL_SELLER_CREDIT
     insurance_adjustment = 0 if scenario.has_insurance else -INSURANCE_PENALTY
     non_compete_adjustment = 0 if scenario.has_non_compete else -NON_COMPETE_PENALTY
 
