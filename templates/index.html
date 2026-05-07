@@ -17,8 +17,8 @@
       <p class="eyebrow">Kocon & Co</p>
       <h1>Kalkulator wartości transakcji</h1>
       <p class="intro">
-        Model startuje od wartości bazowej <strong>7.40 mln zł</strong> przy
-        ustawieniach neutralnych. Zmieniaj parametry i obserwuj wpływ na wynik.
+        Ustaw parametry po lewej, a po prawej od razu zobaczysz wynik i wpływ
+        każdego warunku na końcową wartość transakcji.
       </p>
     </section>
 
@@ -70,39 +70,35 @@
     <section class="panel panel-results">
       <div class="panel-heading">
         <h2>Wynik</h2>
-        <p>Zakres referencyjny: 7.40 mln - 7.80 mln zł.</p>
+        <p>Wykres pokazuje po kolei, co podnosi lub obniża wartość transakcji.</p>
       </div>
 
-      <div class="result-card">
-        <p class="result-label">Wartość transakcji</p>
-        <p class="result-value" id="totalValue">7.40 mln zł</p>
-        <p class="result-subtitle" id="rangeStatus">Wartość mieści się w zakresie referencyjnym.</p>
-      </div>
+      <div class="result-card result-card-compact">
+        <div>
+          <p class="result-label">Wartość transakcji</p>
+          <p class="result-value" id="totalValue">7.40 mln zł</p>
+          <p class="result-subtitle" id="rangeStatus">Wartość mieści się w zakresie referencyjnym.</p>
+        </div>
 
-      <div class="visual-stack">
-        <div class="visual-card">
-          <div class="visual-heading">
-            <h3>Oś wyniku transakcji</h3>
-            <p>
-              Marker pokazuje aktualną wartość transakcji, a jasny przedział wskazuje
-              zakres referencyjny 7.40-7.80 mln zł.
-            </p>
+        <div class="result-badges">
+          <div class="result-badge">
+            <span>Zakres referencyjny</span>
+            <strong>7.40 - 7.80 mln zł</strong>
           </div>
+          <div class="result-badge">
+            <span>Wartość bazowa</span>
+            <strong id="summaryBaseValue">7.40 mln zł</strong>
+          </div>
+        </div>
+      </div>
 
-          <div class="spectrum-block">
-            <div class="spectrum-labels">
-              <span id="visualMin">3.70 mln zł</span>
-              <span>Zakres roboczy</span>
-              <span id="visualMax">8.40 mln zł</span>
-            </div>
-            <div class="spectrum-track">
-              <div class="spectrum-reference" id="spectrumReference"></div>
-              <div class="spectrum-marker" id="spectrumMarker"></div>
-            </div>
-            <div class="spectrum-readout">
-              <span id="spectrumZone">Strefa referencyjna</span>
-              <strong id="spectrumTotal">7.40 mln zł</strong>
-            </div>
+      <div class="visual-card visual-card-story">
+        <div class="visual-topline">
+          <div class="visual-heading">
+            <h3>Wykres wpływu warunków</h3>
+            <p>
+              Jeden duży wykres pokazuje drogę od wartości bazowej do wyniku końcowego.
+            </p>
           </div>
 
           <div class="legend-row">
@@ -125,118 +121,52 @@
           </div>
         </div>
 
-        <div class="visual-card">
-          <div class="visual-heading">
-            <h3>Wykres wpływu warunków</h3>
-            <p>
-              To jest ścieżka dojścia do wyniku. Każdy kolejny kolorowy pasek pokazuje,
-              jak dany warunek przesuwa wartość transakcji.
-            </p>
-          </div>
-
-          <div class="waterfall-scale">
-            <span id="waterfallMin">3.70 mln zł</span>
-            <span>Zakres roboczy wykresu</span>
-            <span id="waterfallMax">8.40 mln zł</span>
-          </div>
-
-          <div class="waterfall-chart">
-            <div class="waterfall-row">
-              <div class="waterfall-meta">
-                <span class="waterfall-name">1. Wartość bazowa</span>
-                <strong class="waterfall-number" id="wfBaseValue">7.40 mln zł</strong>
-                <small class="waterfall-note">Punkt startowy kalkulatora.</small>
-              </div>
-              <div class="waterfall-track">
-                <div class="waterfall-bar waterfall-base-bar" id="wfBaseBar"></div>
-                <div class="waterfall-node" id="wfBaseNode"></div>
-              </div>
-            </div>
-
-            <div class="waterfall-row">
-              <div class="waterfall-meta">
-                <span class="waterfall-name">2. Kontrakt</span>
-                <strong class="waterfall-number" id="wfContractValue">0.00 mln zł</strong>
-                <small class="waterfall-note" id="wfContractNote">Wpływ długości kontraktu.</small>
-              </div>
-              <div class="waterfall-track">
-                <div class="waterfall-bar waterfall-contract-bar" id="wfContractBar"></div>
-                <div class="waterfall-node" id="wfContractNode"></div>
-              </div>
-            </div>
-
-            <div class="waterfall-row">
-              <div class="waterfall-meta">
-                <span class="waterfall-name">3. Kredyt sprzedającego</span>
-                <strong class="waterfall-number" id="wfCreditValue">0.00 mln zł</strong>
-                <small class="waterfall-note" id="wfCreditNote">Wpływ wielkości kredytu.</small>
-              </div>
-              <div class="waterfall-track">
-                <div class="waterfall-bar waterfall-credit-bar" id="wfCreditBar"></div>
-                <div class="waterfall-node" id="wfCreditNode"></div>
-              </div>
-            </div>
-
-            <div class="waterfall-row">
-              <div class="waterfall-meta">
-                <span class="waterfall-name">4. Ubezpieczenie</span>
-                <strong class="waterfall-number" id="wfInsuranceValue">0.00 mln zł</strong>
-                <small class="waterfall-note" id="wfInsuranceNote">Wpływ ubezpieczenia.</small>
-              </div>
-              <div class="waterfall-track">
-                <div class="waterfall-bar waterfall-insurance-bar" id="wfInsuranceBar"></div>
-                <div class="waterfall-node" id="wfInsuranceNode"></div>
-              </div>
-            </div>
-
-            <div class="waterfall-row">
-              <div class="waterfall-meta">
-                <span class="waterfall-name">5. Zakaz konkurencji</span>
-                <strong class="waterfall-number" id="wfNonCompeteValue">0.00 mln zł</strong>
-                <small class="waterfall-note" id="wfNonCompeteNote">Wpływ zabezpieczenia pacjentów.</small>
-              </div>
-              <div class="waterfall-track">
-                <div class="waterfall-bar waterfall-noncompete-bar" id="wfNonCompeteBar"></div>
-                <div class="waterfall-node" id="wfNonCompeteNode"></div>
-              </div>
-            </div>
-
-            <div class="waterfall-row waterfall-row-final">
-              <div class="waterfall-meta">
-                <span class="waterfall-name">6. Wynik końcowy</span>
-                <strong class="waterfall-number" id="wfFinalValue">7.40 mln zł</strong>
-                <small class="waterfall-note" id="wfFinalNote">Suma wszystkich wpływów.</small>
-              </div>
-              <div class="waterfall-track">
-                <div class="waterfall-bar waterfall-final-bar" id="wfFinalBar"></div>
-                <div class="waterfall-node" id="wfFinalNode"></div>
-              </div>
-            </div>
-          </div>
+        <div class="flow-chart-shell">
+          <svg
+            id="impactFlowSvg"
+            class="impact-flow-svg"
+            viewBox="0 0 860 190"
+            role="img"
+            aria-label="Wykres wpływu warunków na wartość transakcji"
+          ></svg>
         </div>
-      </div>
 
-      <div class="breakdown">
-        <h3>Rozbicie zmian względem wartości bazowej</h3>
-        <div class="breakdown-row">
-          <span>Wartość bazowa</span>
-          <strong id="baseValue">7.40 mln zł</strong>
-        </div>
-        <div class="breakdown-row">
-          <span>Kontrakt</span>
-          <strong id="contractAdjustment">0.00 mln zł</strong>
-        </div>
-        <div class="breakdown-row">
-          <span>Kredyt sprzedającego</span>
-          <strong id="creditAdjustment">0.00 mln zł</strong>
-        </div>
-        <div class="breakdown-row">
-          <span>Ubezpieczenie</span>
-          <strong id="insuranceAdjustment">0.00 mln zł</strong>
-        </div>
-        <div class="breakdown-row">
-          <span>Zakaz konkurencji</span>
-          <strong id="nonCompeteAdjustment">0.00 mln zł</strong>
+        <div class="story-grid">
+          <article class="story-card story-card-base" id="storyBaseCard">
+            <span class="story-step">1. Wartość bazowa</span>
+            <strong class="story-amount" id="storyBaseValue">7.40 mln zł</strong>
+            <p class="story-text" id="storyBaseText">Punkt startowy kalkulatora.</p>
+          </article>
+
+          <article class="story-card story-card-contract" id="storyContractCard">
+            <span class="story-step">2. Kontrakt</span>
+            <strong class="story-amount" id="storyContractValue">0.00 mln zł</strong>
+            <p class="story-text" id="storyContractText">Wpływ długości kontraktu.</p>
+          </article>
+
+          <article class="story-card story-card-credit" id="storyCreditCard">
+            <span class="story-step">3. Kredyt sprzedającego</span>
+            <strong class="story-amount" id="storyCreditValue">0.00 mln zł</strong>
+            <p class="story-text" id="storyCreditText">Wpływ wielkości kredytu.</p>
+          </article>
+
+          <article class="story-card story-card-insurance" id="storyInsuranceCard">
+            <span class="story-step">4. Ubezpieczenie</span>
+            <strong class="story-amount" id="storyInsuranceValue">0.00 mln zł</strong>
+            <p class="story-text" id="storyInsuranceText">Wpływ ubezpieczenia.</p>
+          </article>
+
+          <article class="story-card story-card-noncompete" id="storyNonCompeteCard">
+            <span class="story-step">5. Zakaz konkurencji</span>
+            <strong class="story-amount" id="storyNonCompeteValue">0.00 mln zł</strong>
+            <p class="story-text" id="storyNonCompeteText">Wpływ zabezpieczenia pacjentów.</p>
+          </article>
+
+          <article class="story-card story-card-final" id="storyFinalCard">
+            <span class="story-step">6. Wynik końcowy</span>
+            <strong class="story-amount" id="storyFinalValue">7.40 mln zł</strong>
+            <p class="story-text" id="storyFinalText">Suma wszystkich wpływów.</p>
+          </article>
         </div>
       </div>
     </section>

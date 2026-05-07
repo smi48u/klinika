@@ -8,42 +8,44 @@ const elements = {
   contractHint: document.querySelector("#contractHint"),
   totalValue: document.querySelector("#totalValue"),
   rangeStatus: document.querySelector("#rangeStatus"),
-  baseValue: document.querySelector("#baseValue"),
-  contractAdjustment: document.querySelector("#contractAdjustment"),
-  creditAdjustment: document.querySelector("#creditAdjustment"),
-  insuranceAdjustment: document.querySelector("#insuranceAdjustment"),
-  nonCompeteAdjustment: document.querySelector("#nonCompeteAdjustment"),
-  visualMin: document.querySelector("#visualMin"),
-  visualMax: document.querySelector("#visualMax"),
-  spectrumReference: document.querySelector("#spectrumReference"),
-  spectrumMarker: document.querySelector("#spectrumMarker"),
-  spectrumZone: document.querySelector("#spectrumZone"),
-  spectrumTotal: document.querySelector("#spectrumTotal"),
-  waterfallMin: document.querySelector("#waterfallMin"),
-  waterfallMax: document.querySelector("#waterfallMax"),
-  wfBaseValue: document.querySelector("#wfBaseValue"),
-  wfBaseBar: document.querySelector("#wfBaseBar"),
-  wfBaseNode: document.querySelector("#wfBaseNode"),
-  wfContractValue: document.querySelector("#wfContractValue"),
-  wfContractNote: document.querySelector("#wfContractNote"),
-  wfContractBar: document.querySelector("#wfContractBar"),
-  wfContractNode: document.querySelector("#wfContractNode"),
-  wfCreditValue: document.querySelector("#wfCreditValue"),
-  wfCreditNote: document.querySelector("#wfCreditNote"),
-  wfCreditBar: document.querySelector("#wfCreditBar"),
-  wfCreditNode: document.querySelector("#wfCreditNode"),
-  wfInsuranceValue: document.querySelector("#wfInsuranceValue"),
-  wfInsuranceNote: document.querySelector("#wfInsuranceNote"),
-  wfInsuranceBar: document.querySelector("#wfInsuranceBar"),
-  wfInsuranceNode: document.querySelector("#wfInsuranceNode"),
-  wfNonCompeteValue: document.querySelector("#wfNonCompeteValue"),
-  wfNonCompeteNote: document.querySelector("#wfNonCompeteNote"),
-  wfNonCompeteBar: document.querySelector("#wfNonCompeteBar"),
-  wfNonCompeteNode: document.querySelector("#wfNonCompeteNode"),
-  wfFinalValue: document.querySelector("#wfFinalValue"),
-  wfFinalNote: document.querySelector("#wfFinalNote"),
-  wfFinalBar: document.querySelector("#wfFinalBar"),
-  wfFinalNode: document.querySelector("#wfFinalNode"),
+  summaryBaseValue: document.querySelector("#summaryBaseValue"),
+  impactFlowSvg: document.querySelector("#impactFlowSvg"),
+  storyBaseCard: document.querySelector("#storyBaseCard"),
+  storyBaseValue: document.querySelector("#storyBaseValue"),
+  storyBaseText: document.querySelector("#storyBaseText"),
+  storyContractCard: document.querySelector("#storyContractCard"),
+  storyContractValue: document.querySelector("#storyContractValue"),
+  storyContractText: document.querySelector("#storyContractText"),
+  storyCreditCard: document.querySelector("#storyCreditCard"),
+  storyCreditValue: document.querySelector("#storyCreditValue"),
+  storyCreditText: document.querySelector("#storyCreditText"),
+  storyInsuranceCard: document.querySelector("#storyInsuranceCard"),
+  storyInsuranceValue: document.querySelector("#storyInsuranceValue"),
+  storyInsuranceText: document.querySelector("#storyInsuranceText"),
+  storyNonCompeteCard: document.querySelector("#storyNonCompeteCard"),
+  storyNonCompeteValue: document.querySelector("#storyNonCompeteValue"),
+  storyNonCompeteText: document.querySelector("#storyNonCompeteText"),
+  storyFinalCard: document.querySelector("#storyFinalCard"),
+  storyFinalValue: document.querySelector("#storyFinalValue"),
+  storyFinalText: document.querySelector("#storyFinalText"),
+};
+
+const FLOW_WIDTH = 860;
+const FLOW_HEIGHT = 190;
+const FLOW_PADDING = {
+  top: 18,
+  right: 46,
+  bottom: 30,
+  left: 46,
+};
+
+const STEP_COLORS = {
+  base: "#b85c38",
+  contract: "#ff6a57",
+  credit: "#228a57",
+  insurance: "#2f69d8",
+  nonCompete: "#f0a128",
+  final: "#20150d",
 };
 
 function formatMoney(value) {
@@ -53,6 +55,15 @@ function formatMoney(value) {
 function formatSignedMoney(value) {
   const prefix = value > 0 ? "+" : "";
   return `${prefix}${formatMoney(value)}`;
+}
+
+function formatCompactMoney(value) {
+  return `${(value / 1_000_000).toFixed(2)} mln`;
+}
+
+function formatCompactSignedMoney(value) {
+  const prefix = value > 0 ? "+" : "";
+  return `${prefix}${formatCompactMoney(value)}`;
 }
 
 function applyAdjustmentClass(node, value) {
@@ -65,53 +76,37 @@ function applyAdjustmentClass(node, value) {
   }
 }
 
-function clampPercent(value) {
-  return Math.max(0, Math.min(100, value));
-}
+function setCardState(card, value) {
+  card.classList.remove("is-positive", "is-negative", "is-neutral");
 
-function setNodePosition(node, value, range) {
-  const span = Math.max(range.max - range.min, 1);
-  const left = clampPercent(((value - range.min) / span) * 100);
-  node.style.left = `${left}%`;
-}
-
-function setBarPosition(node, startValue, endValue, range) {
-  const span = Math.max(range.max - range.min, 1);
-  const left = clampPercent(((Math.min(startValue, endValue) - range.min) / span) * 100);
-  const width = clampPercent((Math.abs(endValue - startValue) / span) * 100);
-
-  node.style.left = `${left}%`;
-  node.style.width = `${width}%`;
-}
-
-function setStepDirection(node, delta) {
-  node.classList.remove("step-positive", "step-negative", "step-neutral");
-
-  if (delta > 0) {
-    node.classList.add("step-positive");
-  } else if (delta < 0) {
-    node.classList.add("step-negative");
+  if (value > 0) {
+    card.classList.add("is-positive");
+  } else if (value < 0) {
+    card.classList.add("is-negative");
   } else {
-    node.classList.add("step-neutral");
+    card.classList.add("is-neutral");
   }
 }
 
-function updateSpectrum(total, referenceRange, visualRange) {
-  const visualSpan = Math.max(visualRange.max - visualRange.min, 1);
-  const markerPosition = clampPercent(((total - visualRange.min) / visualSpan) * 100);
-  const referenceStart = clampPercent(((referenceRange.min - visualRange.min) / visualSpan) * 100);
-  const referenceWidth = clampPercent(((referenceRange.max - referenceRange.min) / visualSpan) * 100);
+function buildPillMarkup(x, y, label, kind) {
+  const charWidth = kind === "point" ? 7.2 : 6.6;
+  const pillWidth = Math.max(kind === "point" ? 72 : 62, label.length * charWidth + 20);
+  const pillClass = kind === "point" ? "flow-point-pill" : "flow-segment-pill";
+  const textClass = kind === "point" ? "flow-point-text" : "flow-segment-text";
 
-  elements.visualMin.textContent = formatMoney(visualRange.min);
-  elements.visualMax.textContent = formatMoney(visualRange.max);
-  elements.spectrumMarker.style.left = `${markerPosition}%`;
-  elements.spectrumReference.style.left = `${referenceStart}%`;
-  elements.spectrumReference.style.width = `${referenceWidth}%`;
-  elements.spectrumTotal.textContent = formatMoney(total);
+  return `
+    <g transform="translate(${x}, ${y})">
+      <rect class="${pillClass}" x="${-pillWidth / 2}" y="-13" width="${pillWidth}" height="26" rx="13" ry="13"></rect>
+      <text class="${textClass}" x="0" y="4" text-anchor="middle">${label}</text>
+    </g>
+  `;
 }
 
-function updateWaterfall(data) {
-  const range = data.visual_range;
+function renderImpactFlow(data) {
+  const referenceRange = data.reference_range;
+  const plotWidth = FLOW_WIDTH - FLOW_PADDING.left - FLOW_PADDING.right;
+  const plotHeight = FLOW_HEIGHT - FLOW_PADDING.top - FLOW_PADDING.bottom;
+
   const base = data.base_value;
   const afterContract = base + data.adjustments.contract;
   const afterCredit = afterContract + data.adjustments.credit;
@@ -119,91 +114,171 @@ function updateWaterfall(data) {
   const afterNonCompete = afterInsurance + data.adjustments.non_compete;
   const total = data.total;
 
-  elements.waterfallMin.textContent = formatMoney(range.min);
-  elements.waterfallMax.textContent = formatMoney(range.max);
-
-  elements.wfBaseValue.textContent = formatMoney(base);
-  setBarPosition(elements.wfBaseBar, range.min, base, range);
-  setNodePosition(elements.wfBaseNode, base, range);
-
-  const steps = [
-    {
-      valueNode: elements.wfContractValue,
-      noteNode: elements.wfContractNote,
-      barNode: elements.wfContractBar,
-      pointNode: elements.wfContractNode,
-      start: base,
-      end: afterContract,
-      delta: data.adjustments.contract,
-      note:
-        data.adjustments.contract > 0
-          ? "Dłuższy kontrakt podnosi wynik."
-          : data.adjustments.contract < 0
-            ? "Krótszy kontrakt obniża wynik."
-            : "Pełny kontrakt nie zmienia wyniku.",
-    },
-    {
-      valueNode: elements.wfCreditValue,
-      noteNode: elements.wfCreditNote,
-      barNode: elements.wfCreditBar,
-      pointNode: elements.wfCreditNode,
-      start: afterContract,
-      end: afterCredit,
-      delta: data.adjustments.credit,
-      note:
-        data.adjustments.credit > 0
-          ? "Wyższy kredyt sprzedającego podnosi wynik."
-          : data.adjustments.credit < 0
-            ? "Niższy kredyt sprzedającego obniża wynik."
-            : "Kredyt jest na poziomie neutralnym.",
-    },
-    {
-      valueNode: elements.wfInsuranceValue,
-      noteNode: elements.wfInsuranceNote,
-      barNode: elements.wfInsuranceBar,
-      pointNode: elements.wfInsuranceNode,
-      start: afterCredit,
-      end: afterInsurance,
-      delta: data.adjustments.insurance,
-      note:
-        data.adjustments.insurance < 0
-          ? "Brak ubezpieczenia obniża wynik."
-          : "Ubezpieczenie pozostawia wynik bez zmiany.",
-    },
-    {
-      valueNode: elements.wfNonCompeteValue,
-      noteNode: elements.wfNonCompeteNote,
-      barNode: elements.wfNonCompeteBar,
-      pointNode: elements.wfNonCompeteNode,
-      start: afterInsurance,
-      end: afterNonCompete,
-      delta: data.adjustments.non_compete,
-      note:
-        data.adjustments.non_compete < 0
-          ? "Brak zakazu konkurencji obniża wynik."
-          : "Zakaz konkurencji pozostawia wynik bez zmiany.",
-    },
+  const visibleValues = [
+    base,
+    afterContract,
+    afterCredit,
+    afterInsurance,
+    afterNonCompete,
+    total,
+    referenceRange.min,
+    referenceRange.max,
   ];
 
-  for (const step of steps) {
-    step.valueNode.textContent = formatSignedMoney(step.delta);
-    applyAdjustmentClass(step.valueNode, step.delta);
-    step.noteNode.textContent = step.note;
-    setBarPosition(step.barNode, step.start, step.end, range);
-    setNodePosition(step.pointNode, step.end, range);
-    setStepDirection(step.barNode, step.delta);
-  }
+  const rawMin = Math.min(...visibleValues);
+  const rawMax = Math.max(...visibleValues);
+  const dynamicPadding = Math.max((rawMax - rawMin) * 0.22, 180_000);
+  const displayMin = rawMin - dynamicPadding;
+  const displayMax = rawMax + dynamicPadding;
+  const span = Math.max(displayMax - displayMin, 1);
 
-  elements.wfFinalValue.textContent = formatMoney(total);
-  setBarPosition(elements.wfFinalBar, range.min, total, range);
-  setNodePosition(elements.wfFinalNode, total, range);
+  const steps = [
+    { shortLabel: "Baza", value: base, color: STEP_COLORS.base, kind: "base" },
+    {
+      shortLabel: "Kontrakt",
+      value: afterContract,
+      color: STEP_COLORS.contract,
+      delta: data.adjustments.contract,
+      kind: "adjustment",
+    },
+    {
+      shortLabel: "Kredyt",
+      value: afterCredit,
+      color: STEP_COLORS.credit,
+      delta: data.adjustments.credit,
+      kind: "adjustment",
+    },
+    {
+      shortLabel: "Ubezp.",
+      value: afterInsurance,
+      color: STEP_COLORS.insurance,
+      delta: data.adjustments.insurance,
+      kind: "adjustment",
+    },
+    {
+      shortLabel: "Zakaz konk.",
+      value: afterNonCompete,
+      color: STEP_COLORS.nonCompete,
+      delta: data.adjustments.non_compete,
+      kind: "adjustment",
+    },
+    { shortLabel: "Wynik", value: total, color: STEP_COLORS.final, kind: "final" },
+  ];
+
+  const valueToY = (value) => {
+    const ratio = (value - displayMin) / span;
+    return FLOW_PADDING.top + (1 - ratio) * plotHeight;
+  };
+
+  const points = steps.map((step, index) => ({
+    ...step,
+    x: FLOW_PADDING.left + (plotWidth / (steps.length - 1)) * index,
+    y: valueToY(step.value),
+  }));
+
+  const referenceTop = valueToY(referenceRange.max);
+  const referenceBottom = valueToY(referenceRange.min);
+  const referenceHeight = Math.max(referenceBottom - referenceTop, 0);
+
+  const referenceMarkup = `
+    <rect
+      class="flow-reference-band"
+      x="${FLOW_PADDING.left}"
+      y="${referenceTop}"
+      width="${plotWidth}"
+      height="${referenceHeight}"
+      rx="22"
+      ry="22"
+    ></rect>
+    <text class="flow-reference-label" x="${FLOW_PADDING.left + 16}" y="${referenceTop + 22}">Zakres referencyjny</text>
+  `;
+
+  const segmentMarkup = points
+    .slice(1)
+    .map((point, index) => {
+      const previousPoint = points[index];
+      const label = point.kind === "final" ? "Wynik" : formatCompactSignedMoney(point.delta);
+      const pillY = (previousPoint.y + point.y) / 2 + (point.y <= previousPoint.y ? -16 : 16);
+      const lineClass = point.kind === "final" ? "flow-segment flow-segment-final" : "flow-segment";
+
+      return `
+        <g>
+          <line class="${lineClass}" x1="${previousPoint.x}" y1="${previousPoint.y}" x2="${point.x}" y2="${point.y}" stroke="${point.color}"></line>
+          ${buildPillMarkup((previousPoint.x + point.x) / 2, pillY, label, "segment")}
+        </g>
+      `;
+    })
+    .join("");
+
+  const pointMarkup = points
+    .map((point) => {
+      const pillY = point.y < FLOW_PADDING.top + 24 ? point.y + 22 : point.y - 18;
+      const labelY = FLOW_HEIGHT - 8;
+      const radius = point.kind === "final" ? 8 : 7;
+
+      return `
+        <g>
+          ${buildPillMarkup(point.x, pillY, formatCompactMoney(point.value), "point")}
+          <circle class="flow-node" cx="${point.x}" cy="${point.y}" r="${radius}" fill="${point.color}"></circle>
+          <text class="flow-step-label" x="${point.x}" y="${labelY}" text-anchor="middle">${point.shortLabel}</text>
+        </g>
+      `;
+    })
+    .join("");
+
+  elements.impactFlowSvg.innerHTML = `
+    ${referenceMarkup}
+    ${segmentMarkup}
+    ${pointMarkup}
+  `;
+}
+
+function updateStoryCards(data) {
+  const base = data.base_value;
+  const afterContract = base + data.adjustments.contract;
+  const afterCredit = afterContract + data.adjustments.credit;
+  const afterInsurance = afterCredit + data.adjustments.insurance;
+  const total = data.total;
+
+  elements.summaryBaseValue.textContent = formatMoney(base);
+  elements.storyBaseValue.textContent = formatMoney(base);
+  elements.storyBaseText.textContent = "Punkt startowy.";
+  setCardState(elements.storyBaseCard, 0);
+
+  elements.storyContractValue.textContent = formatSignedMoney(data.adjustments.contract);
+  elements.storyContractText.textContent = `Po tym kroku: ${formatMoney(afterContract)}.`;
+  applyAdjustmentClass(elements.storyContractValue, data.adjustments.contract);
+  setCardState(elements.storyContractCard, data.adjustments.contract);
+
+  elements.storyCreditValue.textContent = formatSignedMoney(data.adjustments.credit);
+  elements.storyCreditText.textContent = `Po tym kroku: ${formatMoney(afterCredit)}.`;
+  applyAdjustmentClass(elements.storyCreditValue, data.adjustments.credit);
+  setCardState(elements.storyCreditCard, data.adjustments.credit);
+
+  elements.storyInsuranceValue.textContent = formatSignedMoney(data.adjustments.insurance);
+  elements.storyInsuranceText.textContent = `Po tym kroku: ${formatMoney(afterInsurance)}.`;
+  applyAdjustmentClass(elements.storyInsuranceValue, data.adjustments.insurance);
+  setCardState(elements.storyInsuranceCard, data.adjustments.insurance);
+
+  elements.storyNonCompeteValue.textContent = formatSignedMoney(data.adjustments.non_compete);
+  elements.storyNonCompeteText.textContent = `Przed finałem: ${formatMoney(total)}.`;
+  applyAdjustmentClass(elements.storyNonCompeteValue, data.adjustments.non_compete);
+  setCardState(elements.storyNonCompeteCard, data.adjustments.non_compete);
+
+  elements.storyFinalValue.textContent = formatMoney(total);
 
   if (total < data.reference_range.min) {
-    elements.wfFinalNote.textContent = "Wynik końcowy jest poniżej zakresu referencyjnego.";
+    elements.storyFinalText.textContent = "Wynik końcowy jest poniżej zakresu referencyjnego.";
+    applyAdjustmentClass(elements.storyFinalValue, -1);
+    setCardState(elements.storyFinalCard, -1);
   } else if (total > data.reference_range.max) {
-    elements.wfFinalNote.textContent = "Wynik końcowy jest powyżej zakresu referencyjnego.";
+    elements.storyFinalText.textContent = "Wynik końcowy jest powyżej zakresu referencyjnego.";
+    applyAdjustmentClass(elements.storyFinalValue, 1);
+    setCardState(elements.storyFinalCard, 1);
   } else {
-    elements.wfFinalNote.textContent = "Wynik końcowy mieści się w zakresie referencyjnym.";
+    elements.storyFinalText.textContent = "Wynik końcowy mieści się w zakresie referencyjnym.";
+    applyAdjustmentClass(elements.storyFinalValue, 0);
+    setCardState(elements.storyFinalCard, 0);
   }
 }
 
@@ -229,37 +304,19 @@ async function updateCalculation() {
 
     const data = await response.json();
     const contractComponent = formatMoney(data.contract_component);
-    const rangeMin = data.reference_range.min;
-    const rangeMax = data.reference_range.max;
 
     elements.contractHint.textContent = `Aktualna wartość kontraktu: ${contractComponent} z maksymalnych 2.00 mln zł.`;
     elements.totalValue.textContent = formatMoney(data.total);
-    elements.baseValue.textContent = formatMoney(data.base_value);
 
-    const rows = [
-      [elements.contractAdjustment, data.adjustments.contract],
-      [elements.creditAdjustment, data.adjustments.credit],
-      [elements.insuranceAdjustment, data.adjustments.insurance],
-      [elements.nonCompeteAdjustment, data.adjustments.non_compete],
-    ];
+    renderImpactFlow(data);
+    updateStoryCards(data);
 
-    for (const [node, value] of rows) {
-      node.textContent = formatSignedMoney(value);
-      applyAdjustmentClass(node, value);
-    }
-
-    updateSpectrum(data.total, data.reference_range, data.visual_range);
-    updateWaterfall(data);
-
-    if (data.total < rangeMin) {
+    if (data.total < data.reference_range.min) {
       elements.rangeStatus.textContent = "Wartość jest poniżej zakresu referencyjnego 7.40-7.80 mln zł.";
-      elements.spectrumZone.textContent = "Poniżej zakresu referencyjnego";
-    } else if (data.total > rangeMax) {
+    } else if (data.total > data.reference_range.max) {
       elements.rangeStatus.textContent = "Wartość jest powyżej zakresu referencyjnego 7.40-7.80 mln zł.";
-      elements.spectrumZone.textContent = "Powyżej zakresu referencyjnego";
     } else {
       elements.rangeStatus.textContent = "Wartość mieści się w zakresie referencyjnym.";
-      elements.spectrumZone.textContent = "W zakresie referencyjnym";
     }
   } catch (error) {
     elements.rangeStatus.textContent = "Nie udało się przeliczyć wyniku.";
