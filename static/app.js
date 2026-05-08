@@ -1,8 +1,10 @@
 const elements = {
+  baseValueInput: document.querySelector("#baseValueInput"),
   contractMonths: document.querySelector("#contractMonths"),
   sellerCredit: document.querySelector("#sellerCredit"),
   hasInsurance: document.querySelector("#hasInsurance"),
   hasNonCompete: document.querySelector("#hasNonCompete"),
+  baseValueInputValue: document.querySelector("#baseValueInputValue"),
   contractMonthsValue: document.querySelector("#contractMonthsValue"),
   sellerCreditValue: document.querySelector("#sellerCreditValue"),
   contractHint: document.querySelector("#contractHint"),
@@ -283,13 +285,16 @@ function updateStoryCards(data) {
 }
 
 async function updateCalculation() {
+  const baseValue = Number(elements.baseValueInput.value || 0);
   const payload = {
+    base_value: baseValue,
     contract_months: Number(elements.contractMonths.value),
     seller_credit: Number(elements.sellerCredit.value),
     has_insurance: elements.hasInsurance.checked,
     has_non_compete: elements.hasNonCompete.checked,
   };
 
+  elements.baseValueInputValue.textContent = formatMoney(baseValue);
   elements.contractMonthsValue.textContent = `${payload.contract_months} mies.`;
   elements.sellerCreditValue.textContent = formatMoney(payload.seller_credit);
 
@@ -305,6 +310,8 @@ async function updateCalculation() {
     const data = await response.json();
     const contractComponent = formatMoney(data.contract_component);
 
+    elements.baseValueInput.value = String(data.base_value);
+    elements.baseValueInputValue.textContent = formatMoney(data.base_value);
     elements.contractHint.textContent = `Aktualna wartość kontraktu: ${contractComponent} z maksymalnych 2.00 mln zł.`;
     elements.totalValue.textContent = formatMoney(data.total);
 
@@ -324,6 +331,7 @@ async function updateCalculation() {
 }
 
 for (const node of [
+  elements.baseValueInput,
   elements.contractMonths,
   elements.sellerCredit,
   elements.hasInsurance,

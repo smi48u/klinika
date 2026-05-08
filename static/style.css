@@ -124,6 +124,22 @@ input[type="range"] {
   accent-color: var(--accent);
 }
 
+.text-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(80, 53, 28, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+}
+
+.text-input:focus {
+  outline: 2px solid rgba(184, 92, 56, 0.18);
+  border-color: rgba(184, 92, 56, 0.32);
+}
+
 .hint {
   margin-top: 8px;
   font-size: 0.88rem;

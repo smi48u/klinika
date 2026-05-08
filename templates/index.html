@@ -30,6 +30,26 @@
 
       <div class="field">
         <div class="field-header">
+          <label for="baseValueInput">Wartość bazowa</label>
+          <span id="baseValueInputValue">7.40 mln zł</span>
+        </div>
+        <input
+          id="baseValueInput"
+          name="baseValueInput"
+          class="text-input"
+          type="number"
+          min="0"
+          max="20000000"
+          step="50000"
+          value="7400000"
+        />
+        <p class="hint">
+          Ta wartość wpływa na wynik <strong>1:1</strong>. Domyślnie: <strong>7.40 mln zł</strong>.
+        </p>
+      </div>
+
+      <div class="field">
+        <div class="field-header">
           <label for="contractMonths">Długość kontraktu</label>
           <span id="contractMonthsValue">36 mies.</span>
         </div>
@@ -48,7 +68,8 @@
           value="2000000" />
         <p class="hint">
           Zakres: <strong>1.80 mln - 3.00 mln zł</strong>. Punkt neutralny:
-          <strong>2.00 mln zł</strong>. Mniejszy kredyt zmniejsza wycenę, większy ją zwiększa.
+          <strong>2.00 mln zł</strong>. Zmiana kredytu o <strong>x</strong> zmienia
+          wartość transakcji o <strong>0.5x</strong>.
         </p>
       </div>
 
