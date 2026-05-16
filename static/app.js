@@ -8,7 +8,6 @@ const elements = {
   contractHint: document.querySelector("#contractHint"),
   totalValue: document.querySelector("#totalValue"),
   rangeStatus: document.querySelector("#rangeStatus"),
-  summaryBaseValue: document.querySelector("#summaryBaseValue"),
   propertyAndEquipmentValue: document.querySelector("#propertyAndEquipmentValue"),
   impactFlowSvg: document.querySelector("#impactFlowSvg"),
   storyBaseCard: document.querySelector("#storyBaseCard"),
@@ -241,7 +240,6 @@ function updateStoryCards(data) {
   const afterInsurance = afterCredit + data.adjustments.insurance;
   const total = data.total;
 
-  elements.summaryBaseValue.textContent = formatMoney(base);
   elements.storyBaseValue.textContent = formatMoney(base);
   elements.storyBaseText.textContent = "Punkt startowy.";
   setCardState(elements.storyBaseCard, 0);

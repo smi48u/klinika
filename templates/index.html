@@ -33,7 +33,7 @@
           <label for="contractMonths">Długość kontraktu</label>
           <span id="contractMonthsValue">36 mies.</span>
         </div>
-        <input id="contractMonths" name="contractMonths" type="range" min="0" max="36" step="1" value="36" />
+        <input id="contractMonths" name="contractMonths" type="range" min="24" max="36" step="1" value="36" />
         <p class="hint" id="contractHint">
           Pełne 36 miesięcy odpowiada maksymalnej wartości 2.00 mln zł.
         </p>
@@ -83,17 +83,15 @@
           <div class="result-property-box">
             <span>Nieruchomość + sprzęt</span>
             <strong id="propertyAndEquipmentValue">5.20 mln zł</strong>
+            <small>Wartość transakcji minus kredyt sprzedającego.</small>
           </div>
         </div>
 
-        <div class="result-badges">
-          <div class="result-badge">
+        <div class="result-side">
+          <div class="result-badge result-badge-reference">
             <span>Zakres referencyjny</span>
             <strong>7.40 - 7.80 mln zł</strong>
-          </div>
-          <div class="result-badge">
-            <span>Wartość bazowa</span>
-            <strong id="summaryBaseValue">7.40 mln zł</strong>
+            <small>Docelowy przedział dla wyniku końcowego.</small>
           </div>
         </div>
       </div>
