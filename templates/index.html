@@ -30,26 +30,6 @@
 
       <div class="field">
         <div class="field-header">
-          <label for="baseValueInput">Wartość bazowa</label>
-          <span id="baseValueInputValue">7.40 mln zł</span>
-        </div>
-        <input
-          id="baseValueInput"
-          name="baseValueInput"
-          class="text-input"
-          type="number"
-          min="0"
-          max="20000000"
-          step="50000"
-          value="7400000"
-        />
-        <p class="hint">
-          Ta wartość wpływa na wynik <strong>1:1</strong>. Domyślnie: <strong>7.40 mln zł</strong>.
-        </p>
-      </div>
-
-      <div class="field">
-        <div class="field-header">
           <label for="contractMonths">Długość kontraktu</label>
           <span id="contractMonthsValue">36 mies.</span>
         </div>
@@ -62,13 +42,13 @@
       <div class="field">
         <div class="field-header">
           <label for="sellerCredit">Kredyt sprzedającego</label>
-          <span id="sellerCreditValue">2.00 mln zł</span>
+          <span id="sellerCreditValue">2.20 mln zł</span>
         </div>
-        <input id="sellerCredit" name="sellerCredit" type="range" min="1800000" max="3000000" step="10000"
-          value="2000000" />
+        <input id="sellerCredit" name="sellerCredit" type="range" min="2200000" max="3000000" step="10000"
+          value="2200000" />
         <p class="hint">
-          Zakres: <strong>1.80 mln - 3.00 mln zł</strong>. Punkt neutralny:
-          <strong>2.00 mln zł</strong>. Zmiana kredytu o <strong>x</strong> zmienia
+          Zakres: <strong>2.20 mln - 3.00 mln zł</strong>. Punkt neutralny:
+          <strong>2.20 mln zł</strong>. Zmiana kredytu o <strong>x</strong> zmienia
           wartość transakcji o <strong>0.5x</strong>.
         </p>
       </div>
@@ -76,13 +56,13 @@
       <div class="switches">
         <label class="switch">
           <input id="hasInsurance" name="hasInsurance" type="checkbox" checked />
-          <span>Ubezpieczenie</span>
+          <span>Ubezpieczenie od wypadków</span>
           <small>Brak ubezpieczenia obniża wynik o 1.00 mln zł.</small>
         </label>
 
         <label class="switch">
           <input id="hasNonCompete" name="hasNonCompete" type="checkbox" checked />
-          <span>Zakaz konkurencji i wyciągania pacjentów</span>
+          <span>NCA, NSA, MAC</span>
           <small>Brak obniża wynik o 0.50 mln zł.</small>
         </label>
       </div>
@@ -95,10 +75,15 @@
       </div>
 
       <div class="result-card result-card-compact">
-        <div>
+        <div class="result-main">
           <p class="result-label">Wartość transakcji</p>
           <p class="result-value" id="totalValue">7.40 mln zł</p>
           <p class="result-subtitle" id="rangeStatus">Wartość mieści się w zakresie referencyjnym.</p>
+
+          <div class="result-property-box">
+            <span>Nieruchomość + sprzęt</span>
+            <strong id="propertyAndEquipmentValue">5.20 mln zł</strong>
+          </div>
         </div>
 
         <div class="result-badges">
@@ -133,11 +118,11 @@
             </div>
             <div class="legend-chip">
               <span class="legend-dot insurance-dot"></span>
-              <small>Ubezpieczenie</small>
+              <small>Ubezpieczenie od wypadków</small>
             </div>
             <div class="legend-chip">
               <span class="legend-dot noncompete-dot"></span>
-              <small>Zakaz konkurencji</small>
+              <small>NCA, NSA, MAC</small>
             </div>
           </div>
         </div>
@@ -172,13 +157,13 @@
           </article>
 
           <article class="story-card story-card-insurance" id="storyInsuranceCard">
-            <span class="story-step">4. Ubezpieczenie</span>
+            <span class="story-step">4. Ubezpieczenie od wypadków</span>
             <strong class="story-amount" id="storyInsuranceValue">0.00 mln zł</strong>
             <p class="story-text" id="storyInsuranceText">Wpływ ubezpieczenia.</p>
           </article>
 
           <article class="story-card story-card-noncompete" id="storyNonCompeteCard">
-            <span class="story-step">5. Zakaz konkurencji</span>
+            <span class="story-step">5. NCA, NSA, MAC</span>
             <strong class="story-amount" id="storyNonCompeteValue">0.00 mln zł</strong>
             <p class="story-text" id="storyNonCompeteText">Wpływ zabezpieczenia pacjentów.</p>
           </article>

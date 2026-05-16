@@ -124,22 +124,6 @@ input[type="range"] {
   accent-color: var(--accent);
 }
 
-.text-input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid rgba(80, 53, 28, 0.14);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--ink);
-  font: inherit;
-  font-weight: 700;
-}
-
-.text-input:focus {
-  outline: 2px solid rgba(184, 92, 56, 0.18);
-  border-color: rgba(184, 92, 56, 0.32);
-}
-
 .hint {
   margin-top: 8px;
   font-size: 0.88rem;
@@ -200,6 +184,11 @@ input[type="range"] {
   align-items: center;
 }
 
+.result-main {
+  display: grid;
+  gap: 0;
+}
+
 .result-label {
   font-size: 0.85rem;
   font-weight: 800;
@@ -221,6 +210,33 @@ input[type="range"] {
   font-size: 0.88rem;
   line-height: 1.4;
   color: var(--muted);
+}
+
+.result-property-box {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.72), transparent 32%),
+    linear-gradient(135deg, rgba(184, 92, 56, 0.14), rgba(255, 255, 255, 0.88));
+  border: 1px solid rgba(184, 92, 56, 0.18);
+}
+
+.result-property-box span {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.result-property-box strong {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .result-badges {
